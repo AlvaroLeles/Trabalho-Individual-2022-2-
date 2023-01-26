@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:latest
+    networks:
+      - ponte
+    ports:
+      - "5432:5432"
+    env_file:
+      - metabase/config/postgres_exemple.env
+
+  mongo:
+    build:
+      context: .
+      dockerfile: banco.Dockerfile
+    networks:
+      - ponte
+    ports:
+      - "27017:27017"
+    env_file:
+      - metabase/config/mongo_exemple.env
+
+  metabase:
+    build:
+      context: .
+      dockerfile: mb.Dockerfile
+    networks:
+      - ponte
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+      - postgres
+    env_file:
+      - metabase/config/metabase_database_exemple.env
+
+networks:
+  ponte:
+    driver: bridge
