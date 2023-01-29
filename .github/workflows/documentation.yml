@@ -23,7 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade -r requirements.txt
         pip install sphinx
-        apt-get install doxygen
+        sudo apt-get install doxygen
 
     - name: Run Doxygen
       run: |
